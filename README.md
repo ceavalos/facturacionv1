@@ -1,2 +1,2 @@
 # facturacionv1
-facturacion electronica reactjs
+Sistema de facturacion electronica reactjs. Integración con el MH siguiendo flujo solicitado.
