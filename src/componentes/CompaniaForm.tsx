@@ -1,32 +1,125 @@
-import React, { useState } from 'react';
+'use client';
 
-export default function CompaniaForm() {
-  const [codigo, setCodigo] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [nit, setNit] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [representante, setRepresentante] = useState('');
-  const [telefono, setTelefono] = useState('');
+import { useState } from 'react';
+import styles from '../styles/sharedStyles.module.css'  // Importa el archivo de estilos CSS
+
+
+export default function CompanyForm( ) {
+  
+  const [company, setCompany] = useState({
+    companyCode: '',
+    companyName: '',
+    nit: '',
+    legalRepresentative: '',
+    address: '',
+    phone: '',
+  });
+
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setCompany({
+      ...company,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await fetch('/api/companias', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ codigo, nombre, nit, direccion, representante, telefono })
-    });
+    // Recuperar el token del localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setMessage('User is not authenticated');
+      return;
+    }
+    console.log(token)
+    try {
+      const res = await fetch('/dashoard/companies/api', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(company),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to create company');
+      }
+
+      setMessage('Company created successfully');
+      setCompany({
+        companyCode: '',
+        companyName: '',
+        nit: '',
+        legalRepresentative: '',
+        address: '',
+        phone: '',
+      });
+    } catch (error : any) {
+      setMessage(error.message);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={codigo} onChange={e => setCodigo(e.target.value)} placeholder="Código Empresa" />
-      <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} placeholder="Nombre Empresa" />
-      <input type="text" value={nit} onChange={e => setNit(e.target.value)} placeholder="NIT" />
-      <input type="text" value={direccion} onChange={e => setDireccion(e.target.value)} placeholder="Dirección" />
-      <input type="text" value={representante} onChange={e => setRepresentante(e.target.value)} placeholder="Representante Legal" />
-      <input type="text" value={telefono} onChange={e => setTelefono(e.target.value)} placeholder="Teléfono de Contacto" />
-      <button type="submit">Crear Compañía</button>
-    </form>
+    <div className={styles.container}>
+      <div className={styles.form}>
+        <h1 className={styles.title}>Register Company</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="companyCode"
+            placeholder="Company Code"
+            className={styles.inputField}
+            value={company.companyCode}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="companyName"
+            placeholder="Company Name"
+            className={styles.inputField}
+            value={company.companyName}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="nit"
+            placeholder="NIT"
+            className={styles.inputField}
+            value={company.nit}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="legalRepresentative"
+            placeholder="Legal Representative"
+            className={styles.inputField}
+            value={company.legalRepresentative}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            className={styles.inputField}
+            value={company.address}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            className={styles.inputField}
+            value={company.phone}
+            onChange={handleChange}
+          />
+          <button type="submit" className={styles.button}>Create Company</button>
+        </form>        
+        {message && <p className={styles.error}>{message}</p>}
+      </div>
+    </div>
   );
 }

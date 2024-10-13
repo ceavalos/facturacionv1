@@ -16,11 +16,7 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
-      <ul>
-        <li><a href="/dashboard/users">Mantenimiento de Usuarios</a></li>
-        <li><a href="/dashboard/companies">Crear Compañías</a></li>
-      </ul>
+      <h1>Dashboard</h1>     
     </div>
   );
 }

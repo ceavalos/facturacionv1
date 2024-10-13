@@ -12,10 +12,13 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.6.3",
+    "mongoose": "^8.7.1",
     "next": "14.2.12",
     "next-auth": "^4.24.7",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.8.3",
     "react": "^18",
+    "react-bootstrap-pagination-control": "^1.0.5",
     "react-dom": "^18"
   },
   "devDependencies": {

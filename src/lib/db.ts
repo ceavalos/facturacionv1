@@ -14,6 +14,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
+
 export async function connectToDatabase() {
   if (cached.conn) {
     return cached.conn;
@@ -22,6 +23,9 @@ export async function connectToDatabase() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // Aumenta el tiempo de espera a 30 segundos
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {

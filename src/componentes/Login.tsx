@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './Login.module.css'  // Importa el archivo de estilos CSS
+import styles from './Login.module.css'; // Importa el archivo de estilos CSS
 import jwt from 'jsonwebtoken';
 
 const LoginPage = () => {
@@ -10,8 +10,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const secreto = process.env.JWT_SECRET || 'someSecretKey123456789';
 
+  const JWT_SECRET = process.env.JWT_SECRET || 'your-jwt-secret';
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(''); // Resetea el error
@@ -44,42 +45,21 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    const fetchProtectedData = async () => {
-      // Recuperar el token almacenado en localStorage
-      const token = localStorage.getItem('auth-token');
-
-      if (token) {
-        try {
-          // Hacer la solicitud a la API protegida
-          const res = await fetch('/api/', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`, // Incluir el token en el header
-            },
-          });
-  
-          if (res.ok) {
-            const data = await res.json();
-             // Redirige al usuario al dashboard
-             router.push('/dashboard');
-          }
-  
-          
-        } catch (err: any) {
-          setError(err.message);
-        }
-        
-
-        
+    // Verifica si el usuario tiene un token almacenado en localStorage
+    const token = localStorage.getItem('token');
+    console.log(JWT_SECRET)
+    /*if (token) {
+      try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+         // Si  hay token, redirigir al usuario a la página de dashboard
+         console.log("redirigiendo a dashboard")
+         //router.push('/dashboard');
+      } catch (error) {
+        console.log(error)
       }
-
-     
-    };
-
+      */
+    }
   }, []);
-
-
 
   return (
     <div className={styles.loginContainer}>
