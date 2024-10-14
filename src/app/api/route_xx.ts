@@ -7,7 +7,7 @@ import cors from '@/lib/cors';
 
 // /pages/api/companies/index.js
 import { connectToDatabase as dbConnect} from '@/lib/db';
-import Company from   '../../../../models/Company';
+import Company from   '../../models/Company';
 
 // /pages/api/companies/index.ts
 
@@ -17,9 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { method } = req;
 
+  console.log("metodo")
   // Validar token JWT
   const authHeader = req.headers['authorization'];
-  console.log(authHeader)
+
+
   
   if (!authHeader) {
     return res.status(401).json({ error: 'Authorization header is missing' });

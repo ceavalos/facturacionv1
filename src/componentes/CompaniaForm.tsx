@@ -34,8 +34,9 @@ export default function CompanyForm( ) {
       return;
     }
     console.log(token)
+    console.log(JSON.stringify(company))
     try {
-      const res = await fetch('/dashoard/companies/api', {
+      const res = await fetch('/api/companies', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

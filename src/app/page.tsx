@@ -2,6 +2,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { Button } from 'primereact/button';
+import 'primereact/resources/primereact.min.css';   
 
 export default function Home() {
 

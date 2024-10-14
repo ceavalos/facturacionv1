@@ -5,8 +5,8 @@ import CompaniaList from "@/componentes/companiaList";
 export default function LlamaCompania() {
   return (
     <div>
-      {/* <CompanyForm />  */}
-      <CompaniaList /> 
+     <CompanyForm />  
+      {/*  <CompaniaList /> */}
     </div>
   )
 }

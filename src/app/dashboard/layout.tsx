@@ -13,12 +13,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <main className={`${styles.p_5} ${styles.flex_1} ${styles.h_screen} ${styles.overflow_y_scroll}`}>
                     {children}
                 </main>
-             
-
-
             </div>
-
-
         </>
     )
 }
